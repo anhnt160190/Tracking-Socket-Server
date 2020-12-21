@@ -9,7 +9,9 @@ app.use(cors());
 app.set('view engine', 'ejs');
 app.set('views', 'src/views');
 const port = process.env.PORT || 5000;
-const server = app.listen(port, () => console.log(`Server is running on ${port}`));
+const server = app.listen(port, () =>
+  console.log(`Server is running on ${port}`)
+);
 const io = socketIO(server);
 
 // Execute socket events
@@ -18,4 +20,8 @@ Events(io);
 // Router
 app.get('/', function (req, res) {
   res.render('index');
+});
+
+app.get('/camera', function (req, res) {
+  res.render('camera');
 });
