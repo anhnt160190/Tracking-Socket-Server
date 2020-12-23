@@ -8,6 +8,9 @@ app.use(cors());
 // template engine
 app.set('view engine', 'ejs');
 app.set('views', 'src/views');
+// public
+app.use(express.static('public'))
+
 const port = process.env.PORT || 5000;
 const server = app.listen(port, () =>
   console.log(`Server is running on ${port}`)
