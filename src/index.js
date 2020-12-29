@@ -9,12 +9,10 @@ app.use(cors());
 app.set('view engine', 'ejs');
 app.set('views', 'src/views');
 // public
-app.use(express.static('public'))
+app.use(express.static('public'));
 
 const port = process.env.PORT || 5000;
-const server = app.listen(port, () =>
-  console.log(`Server is running on ${port}`)
-);
+const server = app.listen(port, () => console.log(`Server is running on ${port}`));
 const io = socketIO(server);
 
 // Execute socket events
@@ -27,4 +25,12 @@ app.get('/', function (req, res) {
 
 app.get('/camera', function (req, res) {
   res.render('camera');
+});
+
+app.get('/map', function (req, res) {
+  res.render('map');
+});
+
+app.get('/map_detail', function (req, res) {
+  res.render('map_detail');
 });
