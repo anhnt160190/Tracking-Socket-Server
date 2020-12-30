@@ -38,3 +38,11 @@ app.get('/peer_demo', function (req, res) {
 app.get('/chart', function (req, res) {
   res.render('chart');
 });
+
+app.get('/map', function (req, res) {
+  res.render('map');
+});
+
+app.get('/map_detail', function (req, res) {
+  res.render('map_detail');
+});
