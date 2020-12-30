@@ -1,0 +1,18 @@
+#type-car-chart {
+  margin-bottom: 30px;
+}
+
+#type-car-color-chart {
+  margin-bottom: 30px;
+}
+
+#type-traffic-density {
+  width: 100% !important;
+  height: 500px !important;
+  margin-bottom: 30px;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 30px;
+}
