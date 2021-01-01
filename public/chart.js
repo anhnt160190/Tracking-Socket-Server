@@ -127,7 +127,33 @@ new Chart(document.getElementById('type-traffic-density'), {
     ],
   },
   options: {
-    responsive: true, // Instruct chart js to respond nicely.
-    maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height
+    responsive: true,
+    maintainAspectRatio: false,
+  },
+});
+
+new Chart(document.getElementById('type-bar-chart'), {
+  type: 'bar',
+  data: {
+    labels: [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ],
+    datasets: [
+      {
+        data: [302, 201, 205, 148, 167, 259, 235, 222, 129, 301, 231, 333],
+        label: 'Vụ tai nạn/tháng',
+      },
+    ],
   },
 });
