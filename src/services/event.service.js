@@ -1,6 +1,6 @@
 import { producer, Keys } from '../config';
 
-export const HandleData = async (data) => {
+export const PushToKafka = async (data) => {
   try {
     await producer.connect();
     await producer.send({
@@ -8,7 +8,7 @@ export const HandleData = async (data) => {
       messages: [{ value: JSON.stringify(data) }],
     });
   } catch (error) {
-    console.log(`HandleData error ${error}`);
+    console.log(`PushToKafka error ${error}`);
   } finally {
     await producer.disconnect();
   }

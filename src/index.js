@@ -3,6 +3,7 @@ import socketIO from 'socket.io';
 import { Events } from './event';
 import cors from 'cors';
 import { PeerServer } from 'peer';
+import { logger } from './config';
 
 const app = express();
 app.use(cors());
@@ -18,6 +19,16 @@ const server = app.listen(port, () =>
 );
 const io = socketIO(server);
 const peerServer = PeerServer({ port: 9000, path: '/myapp' });
+
+// middleware
+io.use((socket, next) => {
+  let token = socket.handshake.auth.token;
+  if (!token || token !== 'MY_TOKEN') {
+    logger.error(`FAKE DEVICE with token ${token}`)
+    return next(new Error('authentication error'));
+  }
+  return next();
+});
 
 // Execute socket events
 Events(io);
