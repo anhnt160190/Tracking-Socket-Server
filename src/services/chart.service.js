@@ -2,9 +2,13 @@ import { CarPercent, CarColor, CarDestiny, Accident } from '../models/chart';
 
 export const GetCarPercent = async (req, res) => {
   try {
-    const { date } = req.query;
+    const now = new Date();
+    let startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    if (req.query.date) startDate = new Date(req.query.date);
+    let endDate = new Date();
+    endDate.setDate(startDate.getDate() + 1);
     const rawData = await CarPercent.find({
-      createdAt: new ISODate(date),
+      createdAt: { $gte: startDate, $lt: endDate },
     });
     let car = 0;
     let motorbike = 0;
@@ -20,17 +24,22 @@ export const GetCarPercent = async (req, res) => {
       walk += rawData[i].walk;
       others += rawData[i].others;
     }
-    return { car, motorbike, bus, bike, walk, others };
+    return res.status(200).json({ car, motorbike, bus, bike, walk, others });
   } catch (error) {
+    console.log(error);
     return res.status(400).json({ error });
   }
 };
 
 export const GetCarColor = async (req, res) => {
   try {
-    const { date } = req.query;
+    const now = new Date();
+    let startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    if (req.query.date) startDate = new Date(req.query.date);
+    let endDate = new Date();
+    endDate.setDate(startDate.getDate() + 1);
     const rawData = await CarColor.find({
-      createdAt: new ISODate(date),
+      createdAt: { $gte: startDate, $lt: endDate },
     });
     let black = 0;
     let white = 0;
@@ -44,7 +53,7 @@ export const GetCarColor = async (req, res) => {
       red += rawData[i].red;
       others += rawData[i].others;
     }
-    return { black, white, blue, red, others };
+    return res.status(200).json({ black, white, blue, red, others });
   } catch (error) {
     return res.status(400).json({ error });
   }
@@ -52,11 +61,13 @@ export const GetCarColor = async (req, res) => {
 
 export const GetCarDestiny = async (req, res) => {
   try {
-    const { date } = req.query;
+    const now = new Date();
+    let date = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    if (req.query.date) date = new Date(req.query.date);
     const rawData = await CarDestiny.find({
-      year: new Date(date).getFullYear(),
+      year: date.getFullYear(),
     });
-    return {
+    return res.status(200).json({
       1: GetTotalEqualMonth(rawData, 1),
       2: GetTotalEqualMonth(rawData, 2),
       3: GetTotalEqualMonth(rawData, 3),
@@ -69,7 +80,7 @@ export const GetCarDestiny = async (req, res) => {
       10: GetTotalEqualMonth(rawData, 10),
       11: GetTotalEqualMonth(rawData, 11),
       12: GetTotalEqualMonth(rawData, 12),
-    };
+    });
   } catch (error) {
     return res.status(400).json({ error });
   }
@@ -77,11 +88,13 @@ export const GetCarDestiny = async (req, res) => {
 
 export const GetCarAccident = async (req, res) => {
   try {
-    const { date } = req.query;
+    const now = new Date();
+    let date = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    if (req.query.date) date = new Date(req.query.date);
     const rawData = await Accident.find({
-      year: new Date(date).getFullYear(),
+      year: date.getFullYear(),
     });
-    return {
+    return res.status(200).json({
       1: GetTotalEqualMonth(rawData, 1),
       2: GetTotalEqualMonth(rawData, 2),
       3: GetTotalEqualMonth(rawData, 3),
@@ -94,7 +107,7 @@ export const GetCarAccident = async (req, res) => {
       10: GetTotalEqualMonth(rawData, 10),
       11: GetTotalEqualMonth(rawData, 11),
       12: GetTotalEqualMonth(rawData, 12),
-    };
+    });
   } catch (error) {
     return res.status(400).json({ error });
   }
@@ -102,6 +115,6 @@ export const GetCarAccident = async (req, res) => {
 
 const GetTotalEqualMonth = (raw, month) => {
   return raw
-    .filter((item) => (item.month = month))
-    .reduce((total, val) => (total += val.month), 0);
+    .filter((item) => item.month == month)
+    .reduce((total, val) => (total += val.total), 0);
 };

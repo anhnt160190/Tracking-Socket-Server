@@ -3,10 +3,27 @@ import socketIO from 'socket.io';
 import { Events } from './event';
 import cors from 'cors';
 import { PeerServer } from 'peer';
-import { logger } from './config';
+import { logger, Keys } from './config';
 import * as ChartService from './services/chart.service';
+import mongoose from 'mongoose';
 
 const app = express();
+
+// ConnectDB
+const ConnectDB = async () => {
+  try {
+    await mongoose.connect(Keys.MONGO_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log('CONNECT DB');
+  } catch (error) {
+    console.log(`MONGODB Connect Error ${error}`);
+  }
+};
+
+ConnectDB();
+
 app.use(cors());
 // template engine
 app.set('view engine', 'ejs');
