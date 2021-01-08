@@ -4,6 +4,7 @@ import { Events } from './event';
 import cors from 'cors';
 import { PeerServer } from 'peer';
 import { logger } from './config';
+import * as ChartService from './services/chart.service';
 
 const app = express();
 app.use(cors());
@@ -24,7 +25,7 @@ const peerServer = PeerServer({ port: 9000, path: '/myapp' });
 io.use((socket, next) => {
   let token = socket.handshake.auth.token;
   if (!token || token !== 'MY_TOKEN') {
-    logger.error(`FAKE DEVICE with token ${token}`)
+    logger.error(`FAKE DEVICE with token ${token}`);
     return next(new Error('authentication error'));
   }
   return next();
@@ -57,3 +58,8 @@ app.get('/map', function (req, res) {
 app.get('/map_detail', function (req, res) {
   res.render('map_detail');
 });
+
+app.get('/api/chart/car_percent', ChartService.GetCarPercent);
+app.get('/api/chart/car_color', ChartService.GetCarColor);
+app.get('/api/chart/car_destiny', ChartService.GetCarDestiny);
+app.get('/api/chart/accident', ChartService.GetCarAccident);
