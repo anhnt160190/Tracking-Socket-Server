@@ -1,11 +1,12 @@
-const { Schema, model } = require('mongoose');
+import { Schema, model } from 'mongoose';
 
 const GpsSchema = new Schema(
   {
     lat: Number,
     lng: Number,
+    license: String,
   },
   { timestamps: true }
 );
 
-module.exports = model('gps', GpsSchema);
+export default model('gps', GpsSchema);

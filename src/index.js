@@ -6,6 +6,7 @@ import { PeerServer } from 'peer';
 import { logger, Keys } from './config';
 import * as ChartService from './services/chart.service';
 import mongoose from 'mongoose';
+import * as GpsService from './services/gps.service';
 
 const app = express();
 
@@ -15,6 +16,7 @@ const ConnectDB = async () => {
     await mongoose.connect(Keys.MONGO_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useCreateIndex: true,
     });
     console.log('CONNECT DB');
   } catch (error) {
@@ -80,3 +82,4 @@ app.get('/api/chart/car_percent', ChartService.GetCarPercent);
 app.get('/api/chart/car_color', ChartService.GetCarColor);
 app.get('/api/chart/car_destiny', ChartService.GetCarDestiny);
 app.get('/api/chart/accident', ChartService.GetCarAccident);
+app.get('/api/gps', GpsService.GetTrackings);
