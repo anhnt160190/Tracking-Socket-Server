@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 const CarPercentSchema = new Schema(
   {
@@ -12,7 +12,7 @@ const CarPercentSchema = new Schema(
   { timestamps: true }
 );
 
-export const CarPercent = model("car_percent", CarPercentSchema);
+export const CarPercent = model('car_percent', CarPercentSchema);
 
 const CarColorSchema = new Schema(
   {
@@ -25,18 +25,17 @@ const CarColorSchema = new Schema(
   { timestamps: true }
 );
 
-export const CarColor = model("car_color", CarColorSchema);
+export const CarColor = model('car_color', CarColorSchema);
 
 const CarDestinySchema = new Schema(
   {
-    year: Number,
-    month: Number,
+    hour: Number,
     total: Number,
   },
   { timestamps: true }
 );
 
-export const CarDestiny = model("car_destiny", CarDestinySchema);
+export const CarDestiny = model('car_destiny', CarDestinySchema);
 
 const AccidentSchema = new Schema(
   {
@@ -47,4 +46,4 @@ const AccidentSchema = new Schema(
   { timestamps: true }
 );
 
-export const Accident = model("accident", AccidentSchema);
+export const Accident = model('accident', AccidentSchema);

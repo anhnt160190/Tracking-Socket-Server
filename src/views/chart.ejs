@@ -8,13 +8,15 @@
 </head>
 <body>
   <div class="container">
+    <h3>DASHBOARD</h3>
     <canvas id="type-car-chart"></canvas>
     <canvas id="type-car-color-chart"></canvas>
     <canvas id="type-traffic-density"></canvas>
-    <h2 class="title">Thống kê mật độ giao thông</h2>
+    <h2 class="title" id="title-chart-destiny"></h2>
     <canvas id="type-bar-chart"></canvas>
-    <h2 class="title">Thống kê tai nạn giao thông</h2>
+    <h2 class="title" id="title-chart-accident"></h2>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="/chart.js"></script>
   </div>
