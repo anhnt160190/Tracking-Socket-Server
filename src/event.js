@@ -5,9 +5,13 @@ export const Events = (io) => {
     // console.log('---> connection', socket.id);
 
     socket.on('gps_data', async (data) => {
-      console.log(`--->time: ${new Date()} receive data: ${JSON.stringify(data)}`);
+      console.log(
+        `time: ${new Date()} \n Socket Server receive data: ${JSON.stringify(
+          data
+        )}`
+      );
       await EventService.PushToKafka(data);
       socket.emit('send_to_dashboard', data);
     });
   });
-}
+};

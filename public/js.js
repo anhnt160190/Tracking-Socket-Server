@@ -1,4 +1,6 @@
-﻿$(function () {
+﻿$(MapDetail());
+
+async function MapDetail() {
   var Core = {};
   Core.Timer = function (option) {
     if (option == null) option = {};
@@ -230,8 +232,10 @@
       var $this = this;
       var row = $('<ul>');
       row.css('cursor', 'pointer');
-      row.append("<li class='col0'>{0}</li>".format(tracking.Time));
-      row.append("<li class='col3'>{0}, {1}</li>".format(tracking.Lat, tracking.Lng));
+      row.append("<li class='col0'>{0}</li>".format(tracking.license));
+      row.append(
+        "<li class='col3'>{0}, {1}</li>".format(tracking.lat, tracking.lng)
+      );
       row.click(function () {
         $this.vehicleTracking.gotoIndex(tracking.index);
       });
@@ -260,8 +264,12 @@
     var vehicleIcons = [];
     var directionIcons = [];
     for (var i = 0; i <= 7; i++) {
-      vehicleIcons.push(L.icon({ iconUrl: 'icon/{0}.png'.format(i), iconSize: [35, 35] }));
-      directionIcons.push(L.icon({ iconUrl: 'icon/D{0}.png'.format(i), iconSize: [10, 10] }));
+      vehicleIcons.push(
+        L.icon({ iconUrl: 'icon/{0}.png'.format(i), iconSize: [35, 35] })
+      );
+      directionIcons.push(
+        L.icon({ iconUrl: 'icon/D{0}.png'.format(i), iconSize: [10, 10] })
+      );
     }
 
     this.clear = function () {
@@ -272,20 +280,20 @@
       });
     };
     this.initTracking = function (tracking, previousTracking) {
-      tracking.latLng = L.latLng(tracking.Lat, tracking.Lng);
+      tracking.latLng = L.latLng(tracking.lat, tracking.lng);
       if (previousTracking == null) tracking.direction = 0;
       else {
         tracking.direction = getDir(
           previousTracking.direction,
-          previousTracking.Lng,
-          previousTracking.Lat,
-          tracking.Lng,
-          tracking.Lat
+          previousTracking.lng,
+          previousTracking.lat,
+          tracking.lng,
+          tracking.lat
         );
         tracking.polyline = L.polyline(
           [
-            [tracking.Lat, tracking.Lng],
-            [previousTracking.Lat, previousTracking.Lng],
+            [tracking.lat, tracking.lng],
+            [previousTracking.lat, previousTracking.lng],
           ],
           { color: '#dc3545' }
         );
@@ -314,7 +322,13 @@
         tracking.markerDirection.removeFrom(this.map);
       }
     };
-    var getDir = function (oldDir, oldLongitude, oldLatitude, longitude, latitude) {
+    var getDir = function (
+      oldDir,
+      oldLongitude,
+      oldLatitude,
+      longitude,
+      latitude
+    ) {
       //First point
       if (oldLatitude === 0 && oldLongitude === 0) {
         oldLatitude = latitude;
@@ -328,7 +342,10 @@
       }
 
       //If distance between two cars is too small, exit sub
-      if (canculatorDistance(longitude, latitude, oldLongitude, oldLatitude) < 30) return oldDir;
+      if (
+        canculatorDistance(longitude, latitude, oldLongitude, oldLatitude) < 30
+      )
+        return oldDir;
 
       //Calculate new direction
       var deltax = 0;
@@ -393,6 +410,14 @@
     zoomOffset: -1,
   }).addTo(mapView.map);
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const license = urlParams.get('license');
+  let gpsDatas = trackings;
+  console.log('license', license);
+  if (license) {
+    const res = await axios.get(`/api/gps?license=${license}`);
+    gpsDatas = res.data.data;
+  }
   vehicleTracking.addView(mapView);
-  vehicleTracking.loadTrackings(trackings);
-});
+  vehicleTracking.loadTrackings(gpsDatas);
+}
