@@ -78,6 +78,10 @@ app.get('/map_detail', function (req, res) {
   res.render('map_detail');
 });
 
+app.get('/dashboard', function (req, res) {
+  res.render('dashboard');
+});
+
 app.get('/api/chart/car_percent', ChartService.GetCarPercent);
 app.get('/api/chart/car_color', ChartService.GetCarColor);
 app.get('/api/chart/car_destiny', ChartService.GetCarDestiny);

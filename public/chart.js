@@ -19,12 +19,6 @@ function renderChartCarPercent(data) {
         },
       ],
     },
-    options: {
-      title: {
-        display: true,
-        text: 'Biểu đồ thống kê phần trăm các loại xe',
-      },
-    },
   });
 }
 
@@ -48,12 +42,6 @@ function renderChartCarColor(data) {
         },
       ],
     },
-    options: {
-      title: {
-        display: true,
-        text: 'Biểu đồ thống kê phần trăm màu xe',
-      },
-    },
   });
 }
 
@@ -63,6 +51,7 @@ function renderChartCarDestiny(data) {
     type: 'line',
     data: {
       labels: [
+        '0h',
         '1h',
         '2h',
         '3h',
@@ -87,16 +76,15 @@ function renderChartCarDestiny(data) {
         '22h',
         '22h',
         '23h',
-        '24h',
       ],
       datasets: [
         {
-          label: 'Series 1', // Name the series
+          label: 'mật độ xe / giờ',
           data,
           fill: false,
-          borderColor: '#2196f3', // Add custom color border (Line)
-          backgroundColor: '#2196f3', // Add custom color background (Points and Fill)
-          borderWidth: 1, // Specify bar border width
+          borderColor: '#2196f3',
+          backgroundColor: '#2196f3',
+          borderWidth: 1,
         },
       ],
     },
@@ -105,9 +93,6 @@ function renderChartCarDestiny(data) {
       maintainAspectRatio: false,
     },
   });
-
-  document.getElementById('title-chart-destiny').innerHTML =
-    'Thống kê mật độ giao thông';
 }
 
 function renderChartCarAccident(data) {
@@ -137,9 +122,6 @@ function renderChartCarAccident(data) {
       ],
     },
   });
-
-  document.getElementById('title-chart-accident').innerHTML =
-    'Thống kê tai nạn giao thông';
 }
 
 async function Init() {

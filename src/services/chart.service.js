@@ -76,6 +76,7 @@ export const GetCarDestiny = async (req, res) => {
     return res
       .status(200)
       .json([
+        GetTotalEqualHour(rawData, 0),
         GetTotalEqualHour(rawData, 1),
         GetTotalEqualHour(rawData, 2),
         GetTotalEqualHour(rawData, 3),
@@ -99,7 +100,6 @@ export const GetCarDestiny = async (req, res) => {
         GetTotalEqualHour(rawData, 21),
         GetTotalEqualHour(rawData, 22),
         GetTotalEqualHour(rawData, 23),
-        GetTotalEqualHour(rawData, 24),
       ]);
   } catch (error) {
     return res.status(400).json({ error });
